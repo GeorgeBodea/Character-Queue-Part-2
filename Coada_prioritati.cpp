@@ -66,7 +66,7 @@ void Coada_prioritati::pop() {
     int last_move;
     ultimul_element( tata, last_move );
     Nod_dublu* nod_curent = static_cast<Nod_dublu *>(inceput->get_fiu());
-    nod_curent = tata->get_fiu(last_move);
+    *nod_curent = *(tata->get_fiu(last_move));
     delete tata->get_fiu(last_move);
     tata->set_fiu(nullptr,last_move);
     coboara( nod_curent );

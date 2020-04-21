@@ -14,7 +14,7 @@ Nod_dublu::Nod_dublu(const char *text, int val){
 }
 
 Nod_dublu::~Nod_dublu(){
-    delete[] info;
+    delete [] info;
     anterior = nullptr;
     fiu1 = fiu2 = nullptr;
     prioritate=0;
@@ -85,7 +85,7 @@ void coboara( Nod_dublu* nod ) {
             }
         }
     }
-    else {
+    else if (nod->get_fiu(1)!=nullptr) {
         if( nod->get_fiu(1)->get_prior() > nod->get_prior() ) {
             swap_valori(nod,nod->get_fiu(1));
             coboara( nod->get_fiu(1) );

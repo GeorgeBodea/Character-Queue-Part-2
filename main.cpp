@@ -10,8 +10,7 @@ int main() {
 
     p1.insereaza( "tata", 3 );
     p1.insereaza("mama", 2);
-    p1.insereaza("AICI", 3);
-    p1.insereaza("azerty", 6);
-    cout<<p1.top()<<endl;
+    p1.pop();
+    cout<<p1.top();
     return 0;
 }

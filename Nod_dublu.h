@@ -17,7 +17,7 @@ class Nod_dublu: public Nod_simplu {
     char *info;
 public:
     explicit Nod_dublu (const char* text = "", int val = 0);
-    ~Nod_dublu () override;
+    ~Nod_dublu ();
     Nod_dublu* get_fiu(int nr_fiu);
     void set_fiu( Nod_dublu* nod, int nr_fiu );
     int get_prior();
