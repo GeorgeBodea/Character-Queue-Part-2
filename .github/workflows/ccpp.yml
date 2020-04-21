@@ -18,7 +18,7 @@ jobs:
         sudo apt-get install -y valgrind cppcheck g++-9 cmake
     - name: make
       run:
-        g++-9 -Wall -Wextra -pedantic -std=c++17 main.cpp Nod_dublu.cpp Coada_prioritati.cpp Nod_simplu.cpp -o main -g
+        g++-9 -Wall -Wextra -pedantic -std=c++17 main.cpp Nod_dublu.cpp Nod_simplu.h Coada_prioritati.cpp Coada_prioritati.h Nod_simplu.cpp Nod_simplu.h -o main -g
     - name: cppcheck
       run:
         cppcheck --enable=all .
