@@ -10,7 +10,7 @@ Nod_simplu::Nod_simplu() {
 
 }
 Nod_simplu::~Nod_simplu() {
-    fiu1 = nullptr; /
+    fiu1 = nullptr;
 }
 
 Nod_simplu* Nod_simplu::get_fiu() {
