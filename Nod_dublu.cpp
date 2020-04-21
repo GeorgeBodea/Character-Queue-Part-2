@@ -71,6 +71,7 @@ void swap_valori(Nod_dublu *nod1, Nod_dublu *nod2) {
     *aux = *nod1;
     *nod1 = *nod2;
     *nod2 = *aux;
+    delete aux;
 }
 
 void coboara(Nod_dublu *nod) {
