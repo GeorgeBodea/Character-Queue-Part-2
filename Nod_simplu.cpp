@@ -7,7 +7,6 @@
 
 Nod_simplu::Nod_simplu() {
     fiu1 = nullptr;
-
 }
 
 Nod_simplu::~Nod_simplu() {
@@ -23,7 +22,7 @@ Nod_simplu *Nod_simplu::get_fiu() {
     return fiu1;
 }
 
-Nod_simplu &Nod_simplu::operator = (const Nod_simplu &nod_primit) {
+Nod_simplu &Nod_simplu::operator=(const Nod_simplu &nod_primit) {
     std::cout << "Nu avem ce informatii sa copiem.";
     return *this;
 }

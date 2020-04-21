@@ -7,7 +7,7 @@
 Coada_prioritati::Coada_prioritati() {
     numar_elemente = 0;
     inceput = new Nod_simplu;
-};
+}
 
 void Coada_prioritati::ultimul_element(Nod_dublu *&tata,
                                        int &last_move) { // Trebuie sa stim tatal si ultima miscare inainte sa adaugam un nod.
@@ -20,9 +20,9 @@ void Coada_prioritati::ultimul_element(Nod_dublu *&tata,
     last_move = 1;
     Nod_dublu *nod_curent = static_cast<Nod_dublu *>(inceput->get_fiu());
 
-    unsigned s = 1 << ((int) log2(
+    int s = 1 << ((int) log2(
             numar_elemente)); // parte intreaga log 2 n ??? POSIBILITATE REDUSA avem numar_elemente 4, s=>4 .
-    unsigned p2 = s >> 1; // am imp cu 2 pt. pt ca prima cifra nu ne spune nimic despre subarbore
+    int p2 = s >> 1; // am imp cu 2 pt. pt ca prima cifra nu ne spune nimic despre subarbore
 
     while (nod_curent != nullptr && s != numar_elemente) {
         if (s + p2 <= numar_elemente) {
