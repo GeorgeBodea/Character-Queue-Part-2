@@ -25,9 +25,12 @@ public:
     void set_tata( Nod_dublu* tata );
     Nod_dublu* get_tata();
     Nod_dublu& operator = (const Nod_dublu& nod);
+    Nod_dublu (const Nod_dublu& nod_Nou);
     friend void urca( Nod_dublu* nod_de_inserat, Nod_simplu* inceput );
     friend void coboara( Nod_dublu* nod );
     friend void swap_valori( Nod_dublu* nod1, Nod_dublu* nod2 );
+    friend std::ostream & operator <<(std::ostream& out, Nod_dublu& nod);
+    friend std::istream & operator >>(std::istream& in, Nod_dublu& nod);
 };
 
 

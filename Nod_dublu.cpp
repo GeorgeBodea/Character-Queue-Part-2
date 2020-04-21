@@ -8,7 +8,7 @@ Nod_dublu::Nod_dublu(const char *text, int val){
     anterior = nullptr;
     fiu1 = nullptr;
     fiu2 = nullptr;
-    info= new char[strlen(text)];
+    info= new char[strlen(text)+1];
     strcpy(info,text);
     prioritate=val;
 }
@@ -57,6 +57,8 @@ Nod_dublu& Nod_dublu::operator = (const Nod_dublu &nod) {
     // fiu1 = nod.fiu1;
     // fiu2 = nod.fiu2;
     // anterior = nod.anterior;
+    delete[] info;
+    info = new char[strlen(nod.info)+1];
     strcpy(info, nod.info);
     prioritate = nod.prioritate;
     return *this;
@@ -95,4 +97,31 @@ void coboara( Nod_dublu* nod ) {
 
 char* Nod_dublu::get_info() {
     return info;
+}
+
+std::ostream & operator <<(std::ostream& out, Nod_dublu& nod){
+    out<<nod.get_info()<<' '<<nod.get_prior()<<' ';
+    return out;
+}
+
+std::istream & operator >>(std::istream& in, Nod_dublu& nod){
+    char* aux;
+    int prio_nou;
+    aux = new char[256];
+
+    in>>aux;
+    delete[] nod.info;
+    nod.info= new char[strlen(aux)+1];
+    strcpy(nod.info,aux);
+    delete[] aux;
+
+    in>>prio_nou;
+    nod.prioritate=prio_nou;
+    return in;
+}
+
+Nod_dublu::Nod_dublu (const Nod_dublu& nod){
+    info = new char[strlen(nod.info)+1];
+    strcpy(info, nod.info);
+    prioritate = nod.prioritate;
 }

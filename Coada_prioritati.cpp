@@ -57,17 +57,56 @@ void Coada_prioritati::insereaza(const char *info, int prioritate)
     urca( nod_de_inserat, inceput );
 }
 char* Coada_prioritati::top() {
-    Nod_dublu* nod = static_cast<Nod_dublu *>(inceput->get_fiu());
-    return nod->get_info();
+    try {
+        if (numar_elemente==0)
+            throw std::bad_function_call();
+        Nod_dublu *nod = static_cast<Nod_dublu *>(inceput->get_fiu());
+        return nod->get_info();
+    }
+    catch(const std::bad_function_call &e) {
+        return const_cast<char *>(e.what());
+    }
 }
 
 void Coada_prioritati::pop() {
-    Nod_dublu* tata;
-    int last_move;
-    ultimul_element( tata, last_move );
-    Nod_dublu* nod_curent = static_cast<Nod_dublu *>(inceput->get_fiu());
-    *nod_curent = *(tata->get_fiu(last_move));
-    delete tata->get_fiu(last_move);
-    tata->set_fiu(nullptr,last_move);
-    coboara( nod_curent );
+    try {
+
+        if (numar_elemente == 1) {
+            delete inceput->get_fiu();
+            inceput->set_fiu(nullptr);
+            numar_elemente--;
+        }
+        else if( numar_elemente > 1 ) {
+            Nod_dublu *tata;
+            int last_move;
+            ultimul_element(tata, last_move);
+            Nod_dublu *nod_curent = static_cast<Nod_dublu *>(inceput->get_fiu());
+
+            *nod_curent = *(tata->get_fiu(last_move));
+            delete tata->get_fiu(last_move);
+            tata->set_fiu(nullptr, last_move);
+            coboara(nod_curent);
+            numar_elemente--;
+        } else
+            throw std::bad_function_call();
+    }
+    catch (const std::bad_function_call &e ) {
+        std::cout<<e.what();
+    }
+}
+
+Coada_prioritati::~Coada_prioritati(){
+    empty();
+    delete inceput;
+}
+
+void Coada_prioritati::empty(){
+    while(numar_elemente>0){
+        pop();
+    }
+}
+
+Coada_prioritati& Coada_prioritati:: operator = (const Coada_prioritati& coada_nou){
+    empty(); // empty lasa doar radacina.
+
 }
