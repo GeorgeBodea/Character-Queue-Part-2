@@ -1,12 +1,12 @@
 #include <iostream>
 #include "Nod_simplu.h"
 #include "Nod_dublu.h"
-#include "Coada_prioritati.h"
 #include <fstream>
+#include "Coada_prioritati.h"
 using namespace std;
-ifstream f("date.in");
 
 int main() {
+    ifstream f("date.in");
     Coada_prioritati p1;
     f >> p1 >> p1 >> p1;
     Coada_prioritati p2;
