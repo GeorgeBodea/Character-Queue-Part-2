@@ -1,7 +1,7 @@
 #include <iostream>
+#include <fstream>
 #include "Nod_simplu.h"
 #include "Nod_dublu.h"
-#include <fstream>
 #include "Coada_prioritati.h"
 using namespace std;
 
