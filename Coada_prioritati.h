@@ -29,8 +29,6 @@ public:
 
     void empty();
 
-    Nod_simplu *get_radacina() const;
-
     Coada_prioritati &operator=(const Coada_prioritati &coada_noua);
 
     ~Coada_prioritati();

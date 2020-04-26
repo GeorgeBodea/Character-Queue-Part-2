@@ -13,6 +13,12 @@ Nod_dublu::Nod_dublu(const char *text, int val) {
     prioritate = val;
 }
 
+Nod_dublu::Nod_dublu(const Nod_dublu &nod) {
+    info = new char[strlen(nod.info) + 1];
+    strcpy(info, nod.info);
+    prioritate = nod.prioritate;
+}
+
 Nod_dublu::~Nod_dublu() {
     delete[] info;
     anterior = nullptr;
@@ -34,7 +40,7 @@ void Nod_dublu::set_fiu(Nod_dublu *nod, int nr_fiu) {
         fiu2 = nod;
 }
 
-int Nod_dublu::get_prior() {
+int Nod_dublu::get_prioritate() {
     return prioritate;
 }
 
@@ -49,8 +55,8 @@ Nod_dublu *Nod_dublu::get_tata() {
 
 void urca(Nod_dublu *nod_de_inserat, Nod_simplu *inceput) {
     while (nod_de_inserat !=
-           inceput->get_fiu()) {//&& nod_curent -> get_prior() > nod_curent->get_tata() -> get_prior() ) {
-        if (nod_de_inserat->get_prior() <= nod_de_inserat->get_tata()->get_prior())
+           inceput->get_fiu()) {//&& nod_curent -> get_prior() > nod_curent->get_tata() -> get_prioritate() ) {
+        if (nod_de_inserat->get_prioritate() <= nod_de_inserat->get_tata()->get_prioritate())
             break;
         swap_valori(nod_de_inserat, nod_de_inserat->get_tata());
         nod_de_inserat = nod_de_inserat->get_tata();
@@ -76,19 +82,19 @@ void swap_valori(Nod_dublu *nod1, Nod_dublu *nod2) {
 
 void coboara(Nod_dublu *nod) {
     if (nod->get_fiu(2) != nullptr) {
-        if (nod->get_fiu(1)->get_prior() > nod->get_fiu(2)->get_prior()) {
-            if (nod->get_fiu(1)->get_prior() > nod->get_prior()) {
+        if (nod->get_fiu(1)->get_prioritate() > nod->get_fiu(2)->get_prioritate()) {
+            if (nod->get_fiu(1)->get_prioritate() > nod->get_prioritate()) {
                 swap_valori(nod, nod->get_fiu(1));
                 coboara(nod->get_fiu(1));
             }
         } else {
-            if (nod->get_fiu(2)->get_prior() > nod->get_prior()) {
+            if (nod->get_fiu(2)->get_prioritate() > nod->get_prioritate()) {
                 swap_valori(nod, nod->get_fiu(2));
                 coboara(nod->get_fiu(2));
             }
         }
     } else if (nod->get_fiu(1) != nullptr) {
-        if (nod->get_fiu(1)->get_prior() > nod->get_prior()) {
+        if (nod->get_fiu(1)->get_prioritate() > nod->get_prioritate()) {
             swap_valori(nod, nod->get_fiu(1));
             coboara(nod->get_fiu(1));
         }
@@ -100,7 +106,7 @@ char *Nod_dublu::get_info() {
 }
 
 std::ostream &operator<<(std::ostream &out, Nod_dublu &nod) {
-    out << nod.get_info() << ' ' << nod.get_prior() << ' ';
+    out << nod.get_info() << ' ' << nod.get_prioritate() << ' ';
     return out;
 }
 
@@ -120,8 +126,3 @@ std::istream &operator>>(std::istream &in, Nod_dublu &nod) {
     return in;
 }
 
-Nod_dublu::Nod_dublu(const Nod_dublu &nod) {
-    info = new char[strlen(nod.info) + 1];
-    strcpy(info, nod.info);
-    prioritate = nod.prioritate;
-}

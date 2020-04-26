@@ -15,7 +15,7 @@ void Coada_prioritati::ultimul_element(Nod_dublu *&tata,
     tata = (inceput->get_fiu() != nullptr) ? static_cast<Nod_dublu *>(inceput->get_fiu())
                                            : static_cast<Nod_dublu *>(inceput);
     // Daca respectiva coada are doar nodul vid, atunci tatal e nodul vid
-    //, altfel luam  radacina cu nodul dublu si incepem sa parcurgem arborele
+    //altfel luam  radacina cu nodul dublu si incepem sa parcurgem arborele
 
     last_move = 1;
     Nod_dublu *nod_curent = static_cast<Nod_dublu *>(inceput->get_fiu());
@@ -61,8 +61,8 @@ void Coada_prioritati::insereaza(const char *info, int prioritate) {
     Nod_dublu *tata;
     int last_move;
     ultimul_element(tata,
-                    last_move); // tata va primi informatia despre care este nodul subarborelui unde trb adaugat ultimul nod
-    // ,iar last_move unde trebuie adaugat nodul (stanga sau dreapta)
+                    last_move); // tata va primi informatia despre care este nodul subarborelui unde trb adaugat ultimul nod,
+    //iar last_move unde trebuie adaugat nodul (stanga sau dreapta)
 
     Nod_dublu *nod_de_inserat = new Nod_dublu(info, prioritate);
     tata->set_fiu(nod_de_inserat, last_move);
@@ -140,8 +140,4 @@ Nod_dublu *Coada_prioritati::deep_copy(Nod_dublu *nod_de_copiat, const Nod_dublu
         nod_curent->set_fiu(deep_copy(nod_de_copiat->get_fiu(2), nod_curent), 2);
         return nod_curent;
     }
-}
-
-Nod_simplu *Coada_prioritati::get_radacina() const {
-    return inceput;
 }

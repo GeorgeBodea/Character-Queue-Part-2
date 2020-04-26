@@ -24,7 +24,7 @@ public:
 
     void set_fiu(Nod_dublu *nod, int nr_fiu);
 
-    int get_prior();
+    int get_prioritate();
 
     char *get_info();
 
