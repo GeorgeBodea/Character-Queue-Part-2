@@ -22,7 +22,7 @@ void Coada_prioritati::ultimul_element(Nod_dublu *&tata,
 
     int s = 1 << ((int) log2(
             numar_elemente)); // parte intreaga log 2 n ??? POSIBILITATE REDUSA avem numar_elemente 4, s=>4 .
-    int p2 = s >> 1; // am imp cu 2 pt. pt ca prima cifra nu ne spune nimic despre subarbore
+    int p2 = s >> 1; // am impartit cu 2 pentru ca prima cifra nu ne spune nimic despre subarbore
 
     while (nod_curent != nullptr && s != numar_elemente) {
         if (s + p2 <= numar_elemente) {
