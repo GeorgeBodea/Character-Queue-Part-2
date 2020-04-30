@@ -35,7 +35,7 @@ Nod_dublu *Nod_dublu::get_fiu(int nr_fiu) {
 
 void Nod_dublu::set_fiu(Nod_dublu *nod, int nr_fiu) {
     if (nr_fiu == 1)
-        fiu1 = (Nod_simplu *) nod;
+        fiu1 = nod;
     else
         fiu2 = nod;
 }
@@ -53,9 +53,8 @@ Nod_dublu *Nod_dublu::get_tata() {
     return anterior;
 }
 
-void urca(Nod_dublu *nod_de_inserat, Nod_simplu *inceput) {
-    while (nod_de_inserat !=
-           inceput->get_fiu()) {//&& nod_curent -> get_prior() > nod_curent->get_tata() -> get_prioritate() ) {
+void urca(Nod_dublu *nod_de_inserat, Nod_dublu *inceput) {
+    while (nod_de_inserat != inceput) {//&& nod_curent -> get_prior() > nod_curent->get_tata() -> get_prioritate() ) {
         if (nod_de_inserat->get_prioritate() <= nod_de_inserat->get_tata()->get_prioritate())
             break;
         swap_valori(nod_de_inserat, nod_de_inserat->get_tata());
@@ -78,27 +77,6 @@ void swap_valori(Nod_dublu *nod1, Nod_dublu *nod2) {
     *nod1 = *nod2;
     *nod2 = *aux;
     delete aux;
-}
-
-void coboara(Nod_dublu *nod) {
-    if (nod->get_fiu(2) != nullptr) {
-        if (nod->get_fiu(1)->get_prioritate() > nod->get_fiu(2)->get_prioritate()) {
-            if (nod->get_fiu(1)->get_prioritate() > nod->get_prioritate()) {
-                swap_valori(nod, nod->get_fiu(1));
-                coboara(nod->get_fiu(1));
-            }
-        } else {
-            if (nod->get_fiu(2)->get_prioritate() > nod->get_prioritate()) {
-                swap_valori(nod, nod->get_fiu(2));
-                coboara(nod->get_fiu(2));
-            }
-        }
-    } else if (nod->get_fiu(1) != nullptr) {
-        if (nod->get_fiu(1)->get_prioritate() > nod->get_prioritate()) {
-            swap_valori(nod, nod->get_fiu(1));
-            coboara(nod->get_fiu(1));
-        }
-    }
 }
 
 char *Nod_dublu::get_info() {

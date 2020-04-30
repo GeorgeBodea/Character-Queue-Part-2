@@ -5,13 +5,13 @@
 #ifndef TEMA_POO_2_NOD_DUBLU_H
 #define TEMA_POO_2_NOD_DUBLU_H
 
-#include "Nod_simplu.h"
 #include <iostream>
 #include <cstring>
 
 
-class Nod_dublu : public Nod_simplu {
+class Nod_dublu {
     Nod_dublu *anterior;
+    Nod_dublu *fiu1;
     Nod_dublu *fiu2;
     int prioritate;
     char *info;
@@ -36,9 +36,7 @@ public:
 
     Nod_dublu(const Nod_dublu &nod);
 
-    friend void urca(Nod_dublu *nod_de_inserat, Nod_simplu *inceput);
-
-    friend void coboara(Nod_dublu *nod);
+    friend void urca(Nod_dublu *nod_de_inserat, Nod_dublu *inceput);
 
     friend void swap_valori(Nod_dublu *nod1, Nod_dublu *nod2);
 

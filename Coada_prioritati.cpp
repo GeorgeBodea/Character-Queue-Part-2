@@ -6,36 +6,55 @@
 
 Coada_prioritati::Coada_prioritati() {
     numar_elemente = 0;
-    inceput = new Nod_simplu;
+    inceput = nullptr;
 }
 
 void Coada_prioritati::ultimul_element(Nod_dublu *&tata,
                                        int &last_move) { // Trebuie sa stim tatal si ultima miscare inainte sa adaugam un nod.
 
-    tata = (inceput->get_fiu() != nullptr) ? static_cast<Nod_dublu *>(inceput->get_fiu())
-                                           : static_cast<Nod_dublu *>(inceput);
+    tata = inceput;
     // Daca respectiva coada are doar nodul vid, atunci tatal e nodul vid
     //altfel luam  radacina cu nodul dublu si incepem sa parcurgem arborele
 
     last_move = 1;
-    Nod_dublu *nod_curent = static_cast<Nod_dublu *>(inceput->get_fiu());
-
-    int s = 1 << ((int) log2(
-            numar_elemente)); // parte intreaga log 2 n ??? POSIBILITATE REDUSA avem numar_elemente 4, s=>4 .
-    int p2 = s >> 1; // am impartit cu 2 pentru ca prima cifra nu ne spune nimic despre subarbore
-
-    while (nod_curent != nullptr && s != numar_elemente) {
-        if (s + p2 <= numar_elemente) {
-            nod_curent = nod_curent->get_fiu(2);
-            s += p2;
-            last_move = 2;
-        } else {
-            nod_curent = static_cast<Nod_dublu *>(nod_curent->get_fiu(1));
-            last_move = 1;
+    if (tata != nullptr) {
+        Nod_dublu *nod_curent = inceput;
+        int v[32];
+        int poz = 0;
+        int cnr = numar_elemente;
+        while (cnr > 1) {
+            v[poz++] = cnr & 1;
+            cnr >>= 1;
         }
-        if (nod_curent != nullptr && s != numar_elemente)
+        while (poz > 0) {
+            poz--;
             tata = nod_curent;
-        p2 >>= 1;
+            if (v[poz] == 0) {
+                nod_curent = nod_curent->get_fiu(1);
+                last_move = 1;
+            } else {
+                nod_curent = nod_curent->get_fiu(2);
+                last_move = 2;
+            }
+        }
+        /*
+        int s = 1 << ((int) log2(
+                numar_elemente)); // parte intreaga log 2 n ??? POSIBILITATE REDUSA avem numar_elemente 4, s=>4 .
+        int p2 = s >> 1; // am impartit cu 2 pentru ca prima cifra nu ne spune nimic despre subarbore
+
+        while (nod_curent != nullptr && s != numar_elemente) {
+            if (s + p2 <= numar_elemente) {
+                nod_curent = nod_curent->get_fiu(2);
+                s += p2;
+                last_move = 2;
+            } else {
+                nod_curent = nod_curent->get_fiu(1);
+                last_move = 1;
+            }
+            if (nod_curent != nullptr && s != numar_elemente)
+                tata = nod_curent;
+            p2 >>= 1;
+        }*/
     }
 }
 
@@ -65,7 +84,10 @@ void Coada_prioritati::insereaza(const char *info, int prioritate) {
     //iar last_move unde trebuie adaugat nodul (stanga sau dreapta)
 
     Nod_dublu *nod_de_inserat = new Nod_dublu(info, prioritate);
-    tata->set_fiu(nod_de_inserat, last_move);
+    if (tata == nullptr)
+        inceput = nod_de_inserat;
+    else
+        tata->set_fiu(nod_de_inserat, last_move);
     nod_de_inserat->set_tata(tata);
     ///interschimbam cu tatal cat timp avem prioritate mai mare in nod curent
     urca(nod_de_inserat, inceput);
@@ -75,7 +97,7 @@ char *Coada_prioritati::top() {
     try {
         if (numar_elemente == 0)
             throw std::bad_function_call();
-        Nod_dublu *nod = static_cast<Nod_dublu *>(inceput->get_fiu());
+        Nod_dublu *nod = inceput;
         return nod->get_info();
     }
     catch (const std::bad_function_call &e) {
@@ -87,14 +109,14 @@ void Coada_prioritati::pop() {
     try {
 
         if (numar_elemente == 1) {
-            delete inceput->get_fiu();
-            inceput->set_fiu(nullptr);
+            delete inceput;
+            inceput = nullptr;
             numar_elemente--;
         } else if (numar_elemente > 1) {
             Nod_dublu *tata;
             int last_move;
             ultimul_element(tata, last_move);
-            Nod_dublu *nod_curent = static_cast<Nod_dublu *>(inceput->get_fiu());
+            Nod_dublu *nod_curent = inceput;
 
             *nod_curent = *(tata->get_fiu(last_move));
             delete tata->get_fiu(last_move);
@@ -109,23 +131,45 @@ void Coada_prioritati::pop() {
     }
 }
 
+void Coada_prioritati::coboara(Nod_dublu *nod) {
+    if (nod->get_fiu(2) != nullptr) {
+        if (nod->get_fiu(1)->get_prioritate() > nod->get_fiu(2)->get_prioritate()) {
+            if (nod->get_fiu(1)->get_prioritate() > nod->get_prioritate()) {
+                swap_valori(nod, nod->get_fiu(1));
+                coboara(nod->get_fiu(1));
+            }
+        } else {
+            if (nod->get_fiu(2)->get_prioritate() > nod->get_prioritate()) {
+                swap_valori(nod, nod->get_fiu(2));
+                coboara(nod->get_fiu(2));
+            }
+        }
+    } else if (nod->get_fiu(1) != nullptr) {
+        if (nod->get_fiu(1)->get_prioritate() > nod->get_prioritate()) {
+            swap_valori(nod, nod->get_fiu(1));
+            coboara(nod->get_fiu(1));
+        }
+    }
+}
+
 Coada_prioritati::~Coada_prioritati() {
     empty();
-    delete inceput;
 }
 
 void Coada_prioritati::empty() {
-    while (numar_elemente > 0) {
+    while (isEmpty() == false) {
         pop();
     }
-    inceput->set_fiu(nullptr);
+}
+
+bool Coada_prioritati::isEmpty() {
+    return inceput == nullptr;
 }
 
 Coada_prioritati &Coada_prioritati::operator=(const Coada_prioritati &coada_noua) {
     empty(); // empty lasa doar radacina simplu
     numar_elemente = coada_noua.numar_elemente;
-    inceput->set_fiu(deep_copy(static_cast<Nod_dublu *>(coada_noua.inceput->get_fiu()),
-                               static_cast<const Nod_dublu *>(inceput)));
+    inceput = deep_copy(coada_noua.inceput, inceput);
 
     return *this;
 }
@@ -140,4 +184,8 @@ Nod_dublu *Coada_prioritati::deep_copy(Nod_dublu *nod_de_copiat, const Nod_dublu
         nod_curent->set_fiu(deep_copy(nod_de_copiat->get_fiu(2), nod_curent), 2);
         return nod_curent;
     }
+}
+
+Nod_dublu *Coada_prioritati::get_inceput() {
+    return inceput;
 }

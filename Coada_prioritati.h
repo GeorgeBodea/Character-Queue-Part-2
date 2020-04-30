@@ -11,12 +11,14 @@
 
 class Coada_prioritati {
 private:
-    Nod_simplu *inceput;
+    Nod_dublu *inceput;
     int numar_elemente;
 
     void ultimul_element(Nod_dublu *&tata, int &last_move);
 
     Nod_dublu *deep_copy(Nod_dublu *nod_de_copiat, const Nod_dublu *tata);
+
+    void coboara(Nod_dublu *nod);
 
 public:
     Coada_prioritati();
@@ -26,6 +28,10 @@ public:
     char *top();
 
     void pop();
+
+    Nod_dublu *get_inceput();
+
+    bool isEmpty();
 
     void empty();
 
